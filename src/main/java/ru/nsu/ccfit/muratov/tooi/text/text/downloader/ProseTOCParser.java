@@ -12,10 +12,10 @@ import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Downloader {
+public class ProseTOCParser {
     private final int bookNumber;
 
-    public Downloader(int bookNumber) {
+    public ProseTOCParser(int bookNumber) {
         this.bookNumber = bookNumber;
     }
 
