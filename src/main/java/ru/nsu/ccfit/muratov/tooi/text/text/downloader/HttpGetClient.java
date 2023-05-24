@@ -15,7 +15,7 @@ public class HttpGetClient {
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(conn.getInputStream()))) {
+                new InputStreamReader(conn.getInputStream(), "windows-1251"))) {
             for (String line; (line = reader.readLine()) != null;) {
                 result.append(line);
             }
