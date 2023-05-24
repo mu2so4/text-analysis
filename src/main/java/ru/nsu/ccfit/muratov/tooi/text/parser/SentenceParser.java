@@ -19,7 +19,7 @@ public class SentenceParser implements AutoCloseable {
     public String nextSentence() throws IOException {
         int start = iterator.current();
         int end = iterator.next();
-        if(end == BreakIterator.DONE) {
+        while(end == BreakIterator.DONE) {
             line = input.readLine();
             if(line == null) {
                 return null;
