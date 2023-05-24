@@ -19,7 +19,7 @@ public class Downloader {
         this.bookNumber = bookNumber;
     }
 
-    public int getPage() throws IOException {
+    public ProseParser getPage() throws IOException {
         StringBuilder result = new StringBuilder();
         URL url = new URL(String.format("https://ilibrary.ru/text/%d/index.html", bookNumber));
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -48,6 +48,6 @@ public class Downloader {
 
         maxUrl = maxUrl.replace(Integer.toString(bookNumber), "");
         maxUrl = maxUrl.replaceAll("\\D", "");
-        return Integer.parseInt(maxUrl);
+        return new ProseParser(bookNumber, Integer.parseInt(maxUrl));
     }
 }
