@@ -4,11 +4,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,17 +16,8 @@ public class ProseTOCParser {
     }
 
     public ProseParser getPage() throws IOException {
-        StringBuilder result = new StringBuilder();
-        URL url = new URL(String.format("https://ilibrary.ru/text/%d/index.html", bookNumber));
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
-        try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(conn.getInputStream()))) {
-            for (String line; (line = reader.readLine()) != null;) {
-                result.append(line);
-            }
-        }
-        String response =  result.toString();
+        String response = HttpGetClient.getPage(
+                String.format("https://ilibrary.ru/text/%d/index.html", bookNumber));
 
         Document doc = Jsoup.parse(response);
         Elements links = doc.select("a");
