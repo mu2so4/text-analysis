@@ -1,4 +1,4 @@
-package ru.nsu.ccfit.muratov.tooi.text.parser;
+package ru.nsu.ccfit.muratov.tooi.text.prose.parsers;
 
 import java.io.*;
 import java.text.BreakIterator;

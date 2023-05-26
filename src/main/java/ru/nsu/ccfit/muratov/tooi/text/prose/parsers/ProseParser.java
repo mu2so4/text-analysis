@@ -1,9 +1,9 @@
-package ru.nsu.ccfit.muratov.tooi.text.text.downloader;
+package ru.nsu.ccfit.muratov.tooi.text.prose.parsers;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import ru.nsu.ccfit.muratov.tooi.text.parser.Sentence;
+import ru.nsu.ccfit.muratov.tooi.text.prose.Sentence;
 
 import java.io.IOException;
 import java.util.ArrayList;

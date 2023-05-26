@@ -1,9 +1,11 @@
-package ru.nsu.ccfit.muratov.tooi.text;
+package ru.nsu.ccfit.muratov.tooi.text.prose;
 
 import com.github.demidko.aot.WordformMeaning;
-import ru.nsu.ccfit.muratov.tooi.text.parser.Sentence;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Prose {
     private final List<Sentence> sentences = new ArrayList<>();

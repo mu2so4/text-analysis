@@ -1,8 +1,9 @@
 package ru.nsu.ccfit.muratov.tooi.text;
 
-import ru.nsu.ccfit.muratov.tooi.text.parser.Sentence;
-import ru.nsu.ccfit.muratov.tooi.text.text.downloader.ProseParser;
-import ru.nsu.ccfit.muratov.tooi.text.text.downloader.ProseTOCParser;
+import ru.nsu.ccfit.muratov.tooi.text.prose.Prose;
+import ru.nsu.ccfit.muratov.tooi.text.prose.Sentence;
+import ru.nsu.ccfit.muratov.tooi.text.prose.parsers.ProseParser;
+import ru.nsu.ccfit.muratov.tooi.text.prose.parsers.ProseTOCParser;
 
 import java.io.IOException;
 import java.util.List;

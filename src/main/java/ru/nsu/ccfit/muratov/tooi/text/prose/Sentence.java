@@ -1,4 +1,4 @@
-package ru.nsu.ccfit.muratov.tooi.text.parser;
+package ru.nsu.ccfit.muratov.tooi.text.prose;
 
 import com.github.demidko.aot.WordformMeaning;
 
