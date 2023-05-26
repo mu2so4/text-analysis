@@ -11,14 +11,21 @@ public class Main {
     public static void main(String[] args) throws IOException {
         ProseTOCParser downloader = new ProseTOCParser(Integer.parseInt(args[0]));
         ProseParser proseParser = downloader.getPage();
+        Prose prose = new Prose();
         while(proseParser.hasNext()) {
             List<Sentence> sentences = proseParser.nextChapter();
             for(var sentence : sentences) {
-                for(var word : sentence.getWords()) {
-                    System.out.printf("%s ", word.getLemma());
-                }
-                System.out.println();
+                prose.addSentence(sentence);
             }
+        }
+
+        var frequencies = prose.getMostFrequentedWords();
+        int wordCount = prose.getWordCount();
+        System.out.printf("Total words: %d%n", wordCount);
+        System.out.printf("Total unique: %d%n", frequencies.size());
+        for(int index = 0; index < 100; index++) {
+            var entry = frequencies.get(index);
+            System.out.printf("'%s': %.3f%n", entry.getKey(), (double) entry.getValue() / wordCount);
         }
     }
 }
