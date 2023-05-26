@@ -28,5 +28,11 @@ public class Main {
             var entry = frequencies.get(index);
             System.out.printf("'%s': %.3f%n", entry.getKey(), (double) entry.getValue() / wordCount);
         }
+        System.out.println();
+
+        var sentenceDistribution = prose.getSentenceLengthFrequencies();
+        for(var entry: sentenceDistribution.entrySet()) {
+            System.out.printf("%d\t%d%n", entry.getElement(), entry.getCount());
+        }
     }
 }
