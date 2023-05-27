@@ -1,12 +1,13 @@
 package ru.nsu.ccfit.muratov.tooi.text;
 
 import ru.nsu.ccfit.muratov.tooi.text.analysis.CommonAnalyzer;
-import ru.nsu.ccfit.muratov.tooi.text.analysis.CosineDistance;
+import ru.nsu.ccfit.muratov.tooi.text.analysis.VectorDistance;
 import ru.nsu.ccfit.muratov.tooi.text.analysis.ZScoreReader;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 public class Main {
@@ -39,6 +40,7 @@ public class Main {
                 if(files == null) {
                     throw new NullPointerException("files are null");
                 }
+                Arrays.sort(files);
 
                 int size = files.length;
                 List<Double>[] zScores = new List[size];
@@ -55,10 +57,15 @@ public class Main {
                 for(int first = 0; first < size; first++) {
                     for(int second = first + 1; second < size; second++) {
                         distances[first][second] = distances[second][first] =
-                                CosineDistance.getCosineDistance(zScores[first], zScores[second]);
+                                VectorDistance.getCosineDistance(zScores[first], zScores[second]);
                     }
                 }
 
+                for(String str: files) {
+                    str = str.replaceAll("\\D", "");
+                    System.out.printf("%s\t", str);
+                }
+                System.out.println();
                 for(double[] row: distances) {
                     for(double number: row) {
                         System.out.printf("%.4f ", number);
