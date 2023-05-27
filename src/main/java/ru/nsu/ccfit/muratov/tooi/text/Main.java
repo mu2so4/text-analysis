@@ -8,6 +8,7 @@ import ru.nsu.ccfit.muratov.tooi.text.prose.parsers.ProseTOCParser;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
@@ -26,17 +27,11 @@ public class Main {
         var frequencies = prose.getMostFrequentedWords();
         int wordCount = prose.getWordCount();
         int sentenceCount = prose.getSentenceCount();
-        System.out.printf("Total words: %d%n", wordCount);
-        System.out.printf("Total unique: %d%n", frequencies.size());
-        System.out.printf("Total nouns: %d (%.2f %%)%n", prose.getNounCount(),
-                (double) prose.getNounCount() / wordCount * 100.);
-        System.out.printf("Total verbs: %d (%.2f %%)%n", prose.getVerbCount(),
-                (double) prose.getVerbCount() / wordCount * 100.);
-        System.out.printf("Total adjectives: %d (%.2f %%)%n", prose.getAdjectiveCount(),
-                (double) prose.getAdjectiveCount() / wordCount * 100.);
-        System.out.printf("Total functors: %d (%.2f %%)%n", prose.getFunctionWordsCount(),
-                (double) prose.getFunctionWordsCount() / wordCount * 100.);
-
+        int uniqueWordCount = frequencies.size();
+        double nounProportion = (double) prose.getNounCount() / wordCount * 100.;
+        double verbProportion = (double) prose.getVerbCount() / wordCount * 100.;
+        double adjectiveProportion = (double) prose.getAdjectiveCount() / wordCount * 100.;
+        double functorProportion = (double) prose.getFunctionWordsCount() / wordCount * 100.;
 
         int topLimit = 100;
         int start = 4;
@@ -47,7 +42,15 @@ public class Main {
         }
         double coefficient = analysis.getRegression();
         double vocabularyCoefficient = wordCount / coefficient;
-        System.out.printf("Vocabulary coefficient: %.3f%n", vocabularyCoefficient);
+
+        String commonReportFile = String.format("%s.txt", args[0]);
+        try(OutputStream stream = new FileOutputStream(commonReportFile)) {
+            stream.write(
+                    String.format("%d\t%d\t%.2f\t%.2f\t%.2f\t%.2f\t%.3f%n",
+                            wordCount, uniqueWordCount, nounProportion, verbProportion, adjectiveProportion, functorProportion,
+                            vocabularyCoefficient).getBytes(StandardCharsets.UTF_8)
+            );
+        }
 
         int sum = 0;
         for(int index = 0; index < topLimit; index++) {
@@ -61,7 +64,7 @@ public class Main {
         variance = Math.sqrt(variance);
         String zScoreFilePath = String.format("%s_z-score.txt", args[0]);
 
-        try(FileOutputStream stream = new FileOutputStream(zScoreFilePath)) {
+        try(OutputStream stream = new FileOutputStream(zScoreFilePath)) {
             stream.write(String.format("%d%n", topLimit).getBytes(StandardCharsets.UTF_8));
             for (int index = 0; index < topLimit; index++) {
                 stream.write(String.format("%.5f%n", (frequencies.get(index).getValue() - mean) / variance)
@@ -70,7 +73,7 @@ public class Main {
         }
 
         String sentenceDistPath = String.format("%s_sentence_dist.txt", args[0]);
-        try(FileOutputStream stream = new FileOutputStream(sentenceDistPath)) {
+        try(OutputStream stream = new FileOutputStream(sentenceDistPath)) {
             stream.write(String.format("Sentence count: %d%n", sentenceCount).getBytes(StandardCharsets.UTF_8));
             var sentenceDistribution = prose.getSentenceLengthFrequencies();
             for (var entry: sentenceDistribution.entrySet()) {
