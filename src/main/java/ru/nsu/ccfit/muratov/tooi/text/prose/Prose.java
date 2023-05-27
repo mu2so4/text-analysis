@@ -63,6 +63,10 @@ public class Prose {
         return functionWordsCount;
     }
 
+    public int getSentenceCount() {
+        return sentences.size();
+    }
+
     public List<Map.Entry<String, Integer>> getMostFrequentedWords() {
         var list = new ArrayList<>(wordFrequencies.entrySet());
         list.sort((a, b) -> (b.getValue() - a.getValue()));

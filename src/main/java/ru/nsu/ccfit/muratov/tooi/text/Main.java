@@ -23,22 +23,25 @@ public class Main {
 
         var frequencies = prose.getMostFrequentedWords();
         int wordCount = prose.getWordCount();
+        int sentenceCount = prose.getSentenceCount();
         System.out.printf("Total words: %d%n", wordCount);
         System.out.printf("Total unique: %d%n", frequencies.size());
-        System.out.printf("Total nouns: %d%n", prose.getNounCount());
-        System.out.printf("Total verbs: %d%n", prose.getVerbCount());
-        System.out.printf("Total adjectives: %d%n", prose.getAdjectiveCount());
-        System.out.printf("Total functors: %d%n", prose.getFunctionWordsCount());
+        System.out.printf("Total nouns: %d (%.2f %%)%n", prose.getNounCount(),
+                (double) prose.getNounCount() / wordCount * 100.);
+        System.out.printf("Total verbs: %d (%.2f %%)%n", prose.getVerbCount(),
+                (double) prose.getVerbCount() / wordCount * 100.);
+        System.out.printf("Total adjectives: %d (%.2f %%)%n", prose.getAdjectiveCount(),
+                (double) prose.getAdjectiveCount() / wordCount * 100.);
+        System.out.printf("Total functors: %d (%.2f %%)%n", prose.getFunctionWordsCount(),
+                (double) prose.getFunctionWordsCount() / wordCount * 100.);
+        System.out.printf("Sentence count: %d%n", sentenceCount);
 
         int topLimit = 100;
         int start = 4;
         ReversedRegressionAnalysis analysis = new ReversedRegressionAnalysis();
-        //System.out.printf("Top %d frequencies%n", topLimit);
         for(int index = start; index < topLimit; index++) {
             var entry = frequencies.get(index);
             analysis.add(index + 1., entry.getValue());
-            //System.out.printf("'%s': %.3f%n", entry.getKey(), (double) entry.getValue() / wordCount);
-            //System.out.printf("%d\t%d%n", index + 1, entry.getValue());
         }
         double coefficient = analysis.getRegression();
         double vocabularyCoefficient = wordCount / coefficient;
@@ -47,7 +50,8 @@ public class Main {
         System.out.println("\nSentence length distribution");
         var sentenceDistribution = prose.getSentenceLengthFrequencies();
         for(var entry: sentenceDistribution.entrySet()) {
-            System.out.printf("%d\t%d%n", entry.getElement(), entry.getCount());
+            System.out.printf("%d\t%d\t%.3f%n", entry.getElement(), entry.getCount(),
+                    entry.getCount() / (double) sentenceCount);
         }
     }
 }
