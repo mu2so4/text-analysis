@@ -22,7 +22,12 @@ public class Main {
                         continue;
                     }
                     try {
-                        CommonAnalyzer.analyzeProse(id);
+                        String directory = "results";
+                        CommonAnalyzer analyzer = new CommonAnalyzer(id, 200, directory);
+                        analyzer.analyzeProse();
+                        analyzer.getReversedRegressionAnalysis();
+                        analyzer.getSentenceDistribution();
+                        analyzer.getZScores();
                     } catch (IOException e) {
                         System.err.printf("couldn't process prose with id '%s': %s%n", strId, e.getMessage());
                         continue;
@@ -30,7 +35,7 @@ public class Main {
                     System.out.printf("Prose id %s is done%n", strId);
                 }
                 break;
-            case "allZ":
+            case "fetch-all-z-scores":
                 String path = "results/z-score";
                 File dir = new File(path);
                 String[] files = dir.list();
@@ -52,6 +57,10 @@ public class Main {
                     }
                     System.out.println();
                 }
+                break;
+
+            case "detect":
+                id = Integer.parseInt(args[1]);
                 break;
         }
     }
