@@ -1,4 +1,4 @@
-package ru.nsu.ccfit.muratov.tooi.text.text.downloader;
+package ru.nsu.ccfit.muratov.tooi.text.prose.parsers;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
