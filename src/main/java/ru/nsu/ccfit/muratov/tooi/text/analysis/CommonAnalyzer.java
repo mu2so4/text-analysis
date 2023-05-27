@@ -34,7 +34,7 @@ public class CommonAnalyzer {
         double adjectiveProportion = (double) prose.getAdjectiveCount() / wordCount * 100.;
         double functorProportion = (double) prose.getFunctionWordsCount() / wordCount * 100.;
 
-        int topLimit = 100;
+        int topLimit = 200;
         int start = 4;
         ReversedRegressionAnalysis analysis = new ReversedRegressionAnalysis();
         for(int index = start; index < topLimit; index++) {
@@ -63,7 +63,7 @@ public class CommonAnalyzer {
         for(int index = 0; index < topLimit; index++) {
             variance += Math.pow(frequencies.get(index).getValue() - mean, 2);
         }
-        variance = Math.sqrt(variance);
+        variance = Math.sqrt(variance / (topLimit - 1));
         String zScoreFilePath = String.format("%s/z-score/%d.txt", directory, proseId);
 
         try(OutputStream stream = new FileOutputStream(zScoreFilePath)) {
