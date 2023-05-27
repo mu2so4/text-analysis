@@ -43,7 +43,8 @@ public class Main {
         double coefficient = analysis.getRegression();
         double vocabularyCoefficient = wordCount / coefficient;
 
-        String commonReportFile = String.format("%s.txt", args[0]);
+        String directory = "results";
+        String commonReportFile = String.format("%s/%s.txt", directory, args[0]);
         try(OutputStream stream = new FileOutputStream(commonReportFile)) {
             stream.write(
                     String.format("%d\t%d\t%.2f\t%.2f\t%.2f\t%.2f\t%.3f%n",
@@ -62,7 +63,7 @@ public class Main {
             variance += Math.pow(frequencies.get(index).getValue() - mean, 2);
         }
         variance = Math.sqrt(variance);
-        String zScoreFilePath = String.format("%s_z-score.txt", args[0]);
+        String zScoreFilePath = String.format("%s/%s_z-score.txt", directory, args[0]);
 
         try(OutputStream stream = new FileOutputStream(zScoreFilePath)) {
             stream.write(String.format("%d%n", topLimit).getBytes(StandardCharsets.UTF_8));
@@ -72,7 +73,7 @@ public class Main {
             }
         }
 
-        String sentenceDistPath = String.format("%s_sentence_dist.txt", args[0]);
+        String sentenceDistPath = String.format("%s/%s_sentence_dist.txt", directory, args[0]);
         try(OutputStream stream = new FileOutputStream(sentenceDistPath)) {
             stream.write(String.format("Sentence count: %d%n", sentenceCount).getBytes(StandardCharsets.UTF_8));
             var sentenceDistribution = prose.getSentenceLengthFrequencies();
