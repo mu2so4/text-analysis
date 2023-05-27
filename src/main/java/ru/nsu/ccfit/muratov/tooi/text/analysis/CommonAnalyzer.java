@@ -79,7 +79,7 @@ public class CommonAnalyzer {
             stream.write(String.format("Sentence count: %d%n", sentenceCount).getBytes(StandardCharsets.UTF_8));
             var sentenceDistribution = prose.getSentenceLengthFrequencies();
             for (var entry: sentenceDistribution.entrySet()) {
-                stream.write(String.format("%d\t%d\t%.5f%n", entry.getElement(), entry.getCount(),
+                stream.write(String.format("%d\t%.5f%n", entry.getElement(),
                         entry.getCount() / (double) sentenceCount).getBytes(StandardCharsets.UTF_8));
             }
         }
