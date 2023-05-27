@@ -15,9 +15,20 @@ public class Prose {
     private final List<Integer> sentenceLengthFrequencies = new ArrayList<>();
     private int wordCount;
 
+    private int nounCount;
+    private int verbCount;
+    private int adjectiveCount;
+    private int functionWordsCount;
+
     private void addWord(WordformMeaning word) {
         String lemma = word.getLemma().toString();
-        frequencies.merge(lemma, 1, Integer::sum);
+        wordFrequencies.merge(lemma, 1, Integer::sum);
+        switch(word.getPartOfSpeech()) {
+            case Noun -> nounCount++;
+            case Verb -> verbCount++;
+            case Adjective -> adjectiveCount++;
+            case Union, Particle, Pretext -> functionWordsCount++;
+        }
     }
 
     public void addSentence(Sentence sentence) {
@@ -34,6 +45,22 @@ public class Prose {
 
     public int getWordCount() {
         return wordCount;
+    }
+
+    public int getNounCount() {
+        return nounCount;
+    }
+
+    public int getVerbCount() {
+        return verbCount;
+    }
+
+    public int getAdjectiveCount() {
+        return adjectiveCount;
+    }
+
+    public int getFunctionWordsCount() {
+        return functionWordsCount;
     }
 
     public List<Map.Entry<String, Integer>> getMostFrequentedWords() {

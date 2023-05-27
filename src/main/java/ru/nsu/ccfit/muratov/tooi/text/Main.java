@@ -24,12 +24,20 @@ public class Main {
         int wordCount = prose.getWordCount();
         System.out.printf("Total words: %d%n", wordCount);
         System.out.printf("Total unique: %d%n", frequencies.size());
-        for(int index = 0; index < 100; index++) {
-            var entry = frequencies.get(index);
-            System.out.printf("'%s': %.3f%n", entry.getKey(), (double) entry.getValue() / wordCount);
-        }
-        System.out.println();
+        System.out.printf("Total nouns: %d%n", prose.getNounCount());
+        System.out.printf("Total verbs: %d%n", prose.getVerbCount());
+        System.out.printf("Total adjectives: %d%n", prose.getAdjectiveCount());
+        System.out.printf("Total functors: %d%n%n", prose.getFunctionWordsCount());
 
+        int topLimit = 100;
+        System.out.printf("Top %d frequencies%n", topLimit);
+        for(int index = 0; index < topLimit; index++) {
+            var entry = frequencies.get(index);
+            //System.out.printf("'%s': %.3f%n", entry.getKey(), (double) entry.getValue() / wordCount);
+            System.out.printf("%d\t%d%n", index + 1, entry.getValue());
+        }
+
+        System.out.println("\nSentence length distribution");
         var sentenceDistribution = prose.getSentenceLengthFrequencies();
         for(var entry: sentenceDistribution.entrySet()) {
             System.out.printf("%d\t%d%n", entry.getElement(), entry.getCount());
