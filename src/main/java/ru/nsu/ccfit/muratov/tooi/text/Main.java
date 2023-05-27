@@ -1,14 +1,11 @@
 package ru.nsu.ccfit.muratov.tooi.text;
 
 import ru.nsu.ccfit.muratov.tooi.text.analysis.CommonAnalyzer;
-import ru.nsu.ccfit.muratov.tooi.text.analysis.VectorDistance;
-import ru.nsu.ccfit.muratov.tooi.text.analysis.ZScoreReader;
+import ru.nsu.ccfit.muratov.tooi.text.analysis.GlobalZScoreCounter;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -42,24 +39,7 @@ public class Main {
                 }
                 Arrays.sort(files);
 
-                int size = files.length;
-                List<Double>[] zScores = new List[size];
-                for(int index = 0; index < files.length; index++) {
-                    String name = String.format("%s/%s", path, files[index]);
-                    try(ZScoreReader reader = new ZScoreReader(name)) {
-                        zScores[index] = reader.getVector();
-                    }
-                    catch(FileNotFoundException e) {
-                        System.err.printf("file '%s' not found%n", name);
-                    }
-                }
-                double[][] distances = new double[size][size];
-                for(int first = 0; first < size; first++) {
-                    for(int second = first + 1; second < size; second++) {
-                        distances[first][second] = distances[second][first] =
-                                VectorDistance.getCosineDistance(zScores[first], zScores[second]);
-                    }
-                }
+                double[][] distances = GlobalZScoreCounter.countAllZScores(files, path);
 
                 for(String str: files) {
                     str = str.replaceAll("\\D", "");
